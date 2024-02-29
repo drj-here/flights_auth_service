@@ -29,6 +29,24 @@ class UserService{
         }
     }
 
+    async signIn(email,plainPassword){
+        try{
+           const user=await this.userRepository.getByEmail(email)
+           const encryptedPassword=user.password
+           const passwordMatch=this.checkPassword(plainPassword,encryptedPassword)
+           if(!passwordMatch){
+            console.log("password doesnt match")
+            throw {error:'Incorrect password'}
+           }
+           const newToken=this.createToken({email:user.email,id:user.id})
+           return newToken;
+        }
+        catch(error){
+            console.log("Something went wrong in signIn service")
+            throw error;
+        }
+    }
+
     createToken(user){
         try{
            const token=jwt.sign(user,JWT_KEY,{expiresIn:'1d'})
