@@ -8,7 +8,10 @@ const flightauthstart=()=>{
     app.use(bodyparser.json());
     app.use(bodyparser.urlencoded({extended:true}))
     app.use('/api',apiRoutes)
-    app.listen(PORT,()=>{
+
+    
+    app.listen(PORT,async()=>{
+        
         console.log(`Server is running on PORT ${PORT}`)
     })
 }

@@ -83,7 +83,7 @@ class UserService{
         try{
            const response=this.verifyToken(token)
            if(!response) throw {error:'Invalid token'}
-           const user=this.userRepository.getById(response.id)
+           const user=await this.userRepository.getById(response.id)
            if(!user) throw {error:'No user exists with this token'}
            return user.id;
         }
