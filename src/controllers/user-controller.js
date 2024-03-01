@@ -16,11 +16,11 @@ const create=async(req,res)=>{
         })
     }
     catch(error){
-        return res.status(500).json({
+        return res.status(error.statusCode).json({
             data:{},
             success:false,
-            message:'not able to create the user',
-            err:error
+            message:error.message,
+            err:error.explanation
         })
     }
 }
@@ -64,8 +64,29 @@ const isAuthenticated=async(req,res)=>{
     }
 }
 
+const isAdmin=async(req,res)=>{
+    try{
+        const response=await userService.isAdmin(req.body.id)
+
+        return res.status(200).json({
+            success:true,
+            message:'successfully fetched role',
+            err:{},
+            data:response
+        })
+    }
+    catch(error){
+        return res.status(500).json({
+            message:'not able to get the role',
+            success:false,
+            err:error
+        })
+    }
+}
+
 module.exports={
     create,
     signIn,
-    isAuthenticated
+    isAuthenticated,
+    isAdmin
 }
