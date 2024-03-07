@@ -7,7 +7,7 @@ const flightauthstart=()=>{
     const app=express()
     app.use(bodyparser.json());
     app.use(bodyparser.urlencoded({extended:true}))
-    app.use('/api',apiRoutes)
+    app.use('/auth/api',apiRoutes)
 
     
     app.listen(PORT,async()=>{
